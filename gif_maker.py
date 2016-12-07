@@ -10,7 +10,7 @@ import gearman
 class IntentParser(object):
     def __init__(self):
         self.header = {"Content-Type":"application/json","apiKey":"F9RpSEoojxWCec6"}
-        self.gm_worker = gearman.GearmanWorker(['localhost:5005'])
+        self.gm_worker = gearman.GearmanWorker(['localhost:4730'])
         self.gm_worker.register_task('Gator',self.run)
     def getUrlList(self,sticker):
         list1 = []
@@ -31,14 +31,13 @@ class IntentParser(object):
         if urls:
             ph = str(choice(urls))
             r = requests.get(ph, stream=True)
-            print r.status_code
             if r.status_code == 200:
                 with open("img.png", 'wb') as f:
                     r.raw.decode_content = True
                     shutil.copyfileobj(r.raw, f)
         else:
             print "Not Found"
-        return json.dumps({})
+        return json.dumps({'result':'success'})
 
 if __name__ == '__main__':
     intent = IntentParser()

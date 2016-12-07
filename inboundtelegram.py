@@ -19,10 +19,10 @@ class first_bot:
         bot = bot_value
         update = update_value
         ChatMsg = update.message.text
-        completed_task = self.gm_client.submit_job('Gator',ChatMsg)
+        completed_task = self.gm_client.submit_job('Gator',str(ChatMsg))
         result = json.loads(completed_task.result)
         if completed_task.state == 'COMPLETE':
-            bot_value.sendPhoto(chat_id=chat_id,photo = open('img.png','rb'))        
+            bot_value.sendPhoto(chat_id=update.message.chat_id,photo = open('img.png','rb'))        
 
 if __name__ == '__main__':
         telebot = first_bot()
